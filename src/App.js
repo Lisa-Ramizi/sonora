@@ -4,8 +4,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, InputGroup, FormControl, Button, Row, Card } from 'react-bootstrap'; 
 import { useState, useEffect } from 'react';
 
+const CLIENT_ID ="a686172c8ab94620a181338642102439";
+const CLIENT_SECRET = "d36335100d00432590d93108ce1c0e62";
 function App() {
+
   const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    //api acess token
+    var authParameters = {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+    }
+    fetch('https://accounts.spotify.com/api/token' , authParameters)
+      .then(result => result.json())
+      .then(data => console.log(data))
+  }, [])
 
   return (
     <div className="App">
@@ -24,12 +41,14 @@ function App() {
           </InputGroup>
         </Container>
         <Container>
+          <Row className='mx-2 row row-cols-4'>
           <Card>
             <Card.Img src="#"/>
             <Card.Body>
               <Card.Title>Album Name here</Card.Title>
             </Card.Body>
           </Card>
+          </Row>
         </Container>
     </div>
   );
