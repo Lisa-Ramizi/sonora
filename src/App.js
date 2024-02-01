@@ -10,6 +10,7 @@ function App() {
 
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
+  const [albums, setAlbums] = useState ("");
 
   useEffect(() => {
     //api acess token
@@ -36,7 +37,7 @@ function App() {
     }
   
     // Get request using search to get Artist ID
-    var artistParameters = {
+    var searchParameters = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -45,19 +46,26 @@ function App() {
     };
   
     try {
-      var artistID = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchInput)}&type=artist`, artistParameters)
-        .then(response => response.json());
+      var artistID = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchInput)}&type=artist`, searchParameters)
+        .then(response => response.json())
+        .then(data => { return data.artists.items[0].id})
   
-      console.log(artistID);
+      console.log( "artist id is" + artistID);
     } catch (error) {
       console.error("Error fetching artistID:", error);
     }
+
+    //Fetch albums using Artist ID
+    var ReturnedAlbums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=50', searchParameters )
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      setAlbums(data.items);
+    });
+    //Display albums to user
+
   }
   
-
-  
-
-
   return (
     <div className="App">
         <Container>
