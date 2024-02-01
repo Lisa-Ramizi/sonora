@@ -9,6 +9,7 @@ const CLIENT_SECRET = "d36335100d00432590d93108ce1c0e62";
 function App() {
 
   const [searchInput, setSearchInput] = useState("");
+  const [accessToken, setAccessToken] = useState("");
 
   useEffect(() => {
     //api acess token
@@ -21,8 +22,14 @@ function App() {
     }
     fetch('https://accounts.spotify.com/api/token' , authParameters)
       .then(result => result.json())
-      .then(data => console.log(data))
+      .then(data => setAccessToken(data.access_token))
   }, [])
+
+  //Search
+
+  async function search() {
+    console.log("searching for " + searchInput)
+  }
 
   return (
     <div className="App">
@@ -30,12 +37,12 @@ function App() {
           <InputGroup className="mb-3" size="lg">
             <FormControl placeholder='Search song or artist' type='input' onKeyDown={event => {
               if (event.key =="Enter"){
-                console.log("pressed enter")
+                search();
               }
             }}
             onChange={event => setSearchInput(event.target.value)}
             />
-            <Button onClick={event => {console.log("hello")}}>
+            <Button onClick={search}>
               Search
             </Button>
           </InputGroup>
