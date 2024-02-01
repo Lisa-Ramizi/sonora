@@ -10,7 +10,7 @@ function App() {
 
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const [albums, setAlbums] = useState ("");
+  const [albums, setAlbums] = useState ([]);
 
   useEffect(() => {
     //api acess token
@@ -84,12 +84,16 @@ function App() {
         </Container>
         <Container>
           <Row className='mx-2 row row-cols-4'>
-          <Card>
-            <Card.Img src="#"/>
-            <Card.Body>
-              <Card.Title>Album Name here</Card.Title>
-            </Card.Body>
-          </Card>
+            {albums.map((album, i) => {
+              return (
+                <Card>
+                <Card.Img src={album.images[0].url}/>
+                <Card.Body>
+                  <Card.Title>{album.name}</Card.Title>
+                </Card.Body>
+              </Card>
+              )
+            })}
           </Row>
         </Container>
     </div>
