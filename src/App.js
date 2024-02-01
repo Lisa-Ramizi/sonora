@@ -26,10 +26,37 @@ function App() {
   }, [])
 
   //Search
-
   async function search() {
-    console.log("searching for " + searchInput)
+    console.log("searching for " + searchInput);
+  
+    // Check if searchInput is empty
+    if (!searchInput.trim()) {
+      console.error("Search input is empty");
+      return;
+    }
+  
+    // Get request using search to get Artist ID
+    var artistParameters = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      }
+    };
+  
+    try {
+      var artistID = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchInput)}&type=artist`, artistParameters)
+        .then(response => response.json());
+  
+      console.log(artistID);
+    } catch (error) {
+      console.error("Error fetching artistID:", error);
+    }
   }
+  
+
+  
+
 
   return (
     <div className="App">
