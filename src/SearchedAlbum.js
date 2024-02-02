@@ -1,4 +1,3 @@
-// SearchedAlbum.js
 import React from 'react';
 import { Container, Row, Card } from 'react-bootstrap';
 

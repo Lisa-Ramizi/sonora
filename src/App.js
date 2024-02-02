@@ -1,9 +1,9 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, InputGroup, FormControl, Button } from 'react-bootstrap';
 import CarouselComponent from './CarouselComponent';
 import SearchedAlbum from './SearchedAlbum';
+import NewReleases from './NewReleases';
 
 const CLIENT_ID = "a686172c8ab94620a181338642102439";
 const CLIENT_SECRET = "d36335100d00432590d93108ce1c0e62";
@@ -28,11 +28,11 @@ function App() {
       .then(data => setAccessToken(data.access_token));
   }, []);
 
-  // Search
+  
   async function search() {
     console.log("searching for " + searchInput);
 
-    // Check if searchInput is empty
+    
     if (!searchInput.trim()) {
       console.error("Search input is empty");
       return;
@@ -87,6 +87,7 @@ function App() {
       </Container>
 
       <CarouselComponent />
+      <NewReleases />
 
       <SearchedAlbum albums={albums} />
     </div>
