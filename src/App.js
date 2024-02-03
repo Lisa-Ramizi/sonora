@@ -28,7 +28,9 @@ const App = () => {
     fetch('https://accounts.spotify.com/api/token', authParameters)
       .then(result => result.json())
       .then(data => setAccessToken(data.access_token));
+      console.log("access token " + accessToken);
   }, []);
+
 
   async function search() {
     console.log("searching for " + searchInput);
