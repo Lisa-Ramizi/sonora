@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Card } from 'react-bootstrap';
+import './styles.css';
+
 
 const NewReleases = () => {
   const [newReleases, setNewReleases] = useState([]);
@@ -22,7 +24,7 @@ const NewReleases = () => {
         const tokenData = await tokenResponse.json();
         const accessToken = tokenData.access_token;
 
-        const newReleasesResponse = await fetch('https://api.spotify.com/v1/browse/new-releases?limit=40', {
+        const newReleasesResponse = await fetch('https://api.spotify.com/v1/browse/new-releases?limit=8', {
           headers: {
             'Authorization': `Bearer ${accessToken}`,
           },
@@ -41,20 +43,32 @@ const NewReleases = () => {
   }, []);
 
   return (
-    <Container>
-      <h2>New Releases</h2>
-      <Row className='mx-2 row row-cols-4'>
-        {newReleases.map((album, i) => (
-          <Card key={i}>
-            <Card.Img src={album.images[0].url} />
-            <Card.Body>
-              <Card.Title>{album.name}</Card.Title>
-              <Card.Text>{album.artists[0].name}</Card.Text>
+<Container>
+<h2 style={{
+  color: '#ff0a54',
+  textAlign: 'center',
+  position: 'relative',
+  textShadow: '0 0 10px rgba(125, 7, 49, 0.8)', 
+  padding: '15px 0px'
+}}>
+  New Releases
+</h2>
+
+  <Row className='mx-2 row'>
+    {newReleases.map((album, i) => (
+      <div key={i} className="col-md-3 mb-4">
+        <Card style={{ width: '300px', height: '350px', margin: '10px', border: 'none', borderRadius: '15px', overflow: 'hidden', backgroundColor: 'black', boxShadow: '0px 4px 8px rgba(255, 10, 84, 0.3)' }}>
+          <Card.Img src={album.images[0].url} style={{ width: '100%', height: '70%', objectFit: 'cover', borderBottom: '2px solid #ff0a54' }} />
+          <Card.Body style={{ padding: '10px', color: '#808080' }}>
+            <Card.Title style={{ fontSize: '12px', fontWeight: 'bold' }}>{album.name}</Card.Title>
+            <Card.Text style={{ fontSize: '10px' }}>{album.artists[0].name}</Card.Text>
+            
             </Card.Body>
-          </Card>
-        ))}
-      </Row>
-    </Container>
+        </Card>
+      </div>
+    ))}
+  </Row>
+</Container>
   );
 };
 
